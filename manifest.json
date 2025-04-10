@@ -1,0 +1,16 @@
+{
+  "name": "דשבורד ROI - המחלקה להתעצמות טכנולוגית",
+  "short_name": "ROI דשבורד",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#f6f9fc",
+  "theme_color": "#1f3c88",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "logo-icon.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}

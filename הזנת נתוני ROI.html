@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>טופס הזנת נתונים לחישוב ROI</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f5f5;
+            direction: rtl;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            background-color: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            margin-top: 0;
+            text-align: center;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+        input, select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 16px;
+            box-sizing: border-box;
+        }
+        .optional {
+            color: #7f8c8d;
+            font-size: 0.8em;
+            font-weight: normal;
+        }
+        .buttons {
+            margin-top: 20px;
+            text-align: center;
+        }
+        button {
+            padding: 10px 20px;
+            margin: 0 5px;
+            border: none;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        #export-btn {
+            background-color: #3498db;
+            color: white;
+        }
+        #export-btn:hover {
+            background-color: #2980b9;
+        }
+        #reset-btn {
+            background-color: #e74c3c;
+            color: white;
+        }
+        #reset-btn:hover {
+            background-color: #c0392b;
+        }
+        .instructions {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f0f8ff;
+            border-radius: 4px;
+            border-right: 4px solid #3498db;
+        }
+        .instructions h3 {
+            margin-top: 0;
+            color: #3498db;
+        }
+        .instructions ol {
+            margin-bottom: 0;
+        }
+        .instructions li {
+            margin-bottom: 5px;
+        }
+        .success-message {
+            display: none;
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #e6f4ea;
+            border-radius: 4px;
+            border-right: 4px solid #2ecc71;
+            text-align: center;
+            font-weight: bold;
+            color: #27ae60;
+        }
+    </style>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+  body {
+    margin: 0;
+    padding: 15px;
+    font-family: 'Segoe UI', sans-serif;
+    background-color: #f6f9fc;
+  }
+  input, select, button {
+    width: 100%;
+    max-width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    font-size: 16px;
+    box-sizing: border-box;
+  }
+  .container {
+    max-width: 600px;
+    margin: auto;
+  }
+  canvas {
+    max-width: 100% !important;
+    height: auto !important;
+  }
+</style>
+</head>
+<body>
+    <div class="container">
+        <h1>טופס הזנת נתונים לחישוב ROI</h1>
+        
+        <form id="roi-form">
+            <div class="form-group">
+                <label for="project-name">שם הפרויקט</label>
+                <input type="text" id="project-name" value="החזר השקעה א-3 דור חדש - מערך מצלמות">
+            </div>
+            
+            <div class="form-group">
+                <label for="current-year">שנת יעד</label>
+                <input type="number" id="current-year" min="2025" max="2035" value="2027">
+            </div>
+            
+            <div class="form-group">
+                <label for="cameras-count">כמות </label>
+                <input type="number" id="cameras-count" min="50" max="500" value="100">
+            </div>
+            
+            <div class="form-group">
+                <label for="income-per-camera">הכנסה שנתית  (₪)</label>
+                <input type="number" id="income-per-camera" value="1733333">
+            </div>
+            
+            <div class="form-group">
+                <label for="total-income">הכנסה שנתית כוללת (₪) <span class="optional">(אופציונלי - יחושב אוטומטית)</span></label>
+                <input type="number" id="total-income" placeholder="יחושב לפי כמות פריט">
+            </div>
+            
+            <div class="form-group">
+                <label for="camera-cost">עלות השקעה לפריט(₪)</label>
+                <input type="number" id="camera-cost" value="250000">
+            </div>
+            
+            <div class="form-group">
+                <label for="initial-fixed-cost">עלות קבועה ראשונית נוספת (₪)</label>
+                <input type="number" id="initial-fixed-cost" value="11220000">
+            </div>
+            
+            <div class="form-group">
+                <label for="yearly-maintenance">תחזוקה שנתית (₪)</label>
+                <input type="number" id="yearly-maintenance" value="5000000">
+            </div>
+            
+            <div class="form-group">
+                <label for="equipment-renewal">חידוש ציוד (₪ לשנה)</label>
+                <input type="number" id="equipment-renewal" value="3000000">
+            </div>
+            
+            <div class="form-group">
+                <label for="personnel-cost">עלות כ"א (₪ לשנה) <span class="optional">(אופציונלי)</span></label>
+                <input type="number" id="personnel-cost" value="8000000">
+            </div>
+            
+            <div class="form-group">
+                <label for="discount-rate">שיעור היוון (%)</label>
+                <input type="number" id="discount-rate" min="0" max="100" step="0.1" value="3.5">
+            </div>
+            
+            <div class="buttons">
+                <button type="button" id="export-btn">ייצא והורד קובץ הגדרות</button>
+                <button type="button" id="reset-btn">איפוס טופס</button>
+            </div>
+        </form>
+        
+        <div id="success-message" class="success-message">
+            קובץ ההגדרות נוצר בהצלחה ומוכן להורדה!
+        </div>
+        
+        <div class="instructions">
+            <h3>הוראות שימוש:</h3>
+            <ol>
+                <li>מלא את הנתונים הרצויים בטופס</li>
+                <li>לחץ על "ייצא והורד קובץ הגדרות" כדי להוריד את קובץ ה-JSON</li>
+                <li>שמור את הקובץ בשם <strong>roi-config.json</strong> בתיקיה שבה נמצא קובץ ה-HTML</li>
+                <li>פתח את קובץ ה-HTML המעודכן והנתונים יטענו אוטומטית</li>
+            </ol>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // התייחסות לאלמנטים בעמוד
+            const form = document.getElementById('roi-form');
+            const exportBtn = document.getElementById('export-btn');
+            const resetBtn = document.getElementById('reset-btn');
+            const successMessage = document.getElementById('success-message');
+            
+            // חישוב אוטומטי של הכנסה כוללת על בסיס כמות  והכנסה לפריט
+            const camerasCountInput = document.getElementById('cameras-count');
+            const incomePerCameraInput = document.getElementById('income-per-camera');
+            const totalIncomeInput = document.getElementById('total-income');
+            
+            function updateTotalIncome() {
+                const camerasCount = parseInt(camerasCountInput.value) || 0;
+                const incomePerCamera = parseInt(incomePerCameraInput.value) || 0;
+                
+                if (camerasCount > 0 && incomePerCamera > 0) {
+                    totalIncomeInput.placeholder = (camerasCount * incomePerCamera).toLocaleString() + ' ₪';
+                } else {
+                    totalIncomeInput.placeholder = 'יחושב לפי כמות ';
+                }
+            }
+            
+            camerasCountInput.addEventListener('input', updateTotalIncome);
+            incomePerCameraInput.addEventListener('input', updateTotalIncome);
+            
+            // אתחול ראשוני
+            updateTotalIncome();
+            
+            // פונקציה ליצירת קובץ והורדתו
+            function downloadObjectAsJson(exportObj, exportName) {
+                const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(exportObj, null, 2));
+                const downloadAnchorNode = document.createElement('a');
+                downloadAnchorNode.setAttribute("href", dataStr);
+                downloadAnchorNode.setAttribute("download", exportName + ".json");
+                document.body.appendChild(downloadAnchorNode); // נדרש עבור Firefox
+                downloadAnchorNode.click();
+                downloadAnchorNode.remove();
+                
+                // הצגת הודעת הצלחה
+                successMessage.style.display = 'block';
+                setTimeout(() => {
+                    successMessage.style.display = 'none';
+                }, 5000);
+            }
+            
+            // פעולת ייצוא הנתונים
+            exportBtn.addEventListener('click', function() {
+                // איסוף כל הנתונים מהטופס
+                const projectName = document.getElementById('project-name').value;
+                const currentYear = parseInt(document.getElementById('current-year').value) || 2027;
+                const camerasCount = parseInt(document.getElementById('cameras-count').value) || 100;
+                const incomePerCamera = parseInt(document.getElementById('income-per-camera').value) || 1733333;
+                let totalIncome = document.getElementById('total-income').value.trim();
+                totalIncome = totalIncome ? parseInt(totalIncome) : null;
+                const cameraCost = parseInt(document.getElementById('camera-cost').value) || 250000;
+                const initialFixedCost = parseInt(document.getElementById('initial-fixed-cost').value) || 11220000;
+                const yearlyMaintenance = parseInt(document.getElementById('yearly-maintenance').value) || 5000000;
+                const equipmentRenewal = parseInt(document.getElementById('equipment-renewal').value) || 3000000;
+                const personnelCost = parseInt(document.getElementById('personnel-cost').value) || 8000000;
+                const discountRate = parseFloat(document.getElementById('discount-rate').value) || 3.5;
+                
+                // יצירת אובייקט הגדרות
+                const config = {
+                    projectTitle: projectName,
+                    currentYear: currentYear,
+                    camerasCount: camerasCount,
+                    incomePerCamera: incomePerCamera,
+                    totalIncome: totalIncome,
+                    cameraCost: cameraCost,
+                    initialFixedCost: initialFixedCost,
+                    yearlyMaintenance: yearlyMaintenance,
+                    equipmentRenewal: equipmentRenewal,
+                    personnelCost: personnelCost,
+                    discountRate: discountRate,
+                    lastUpdated: new Date().toISOString()
+                };
+                
+                // הורדת הקובץ
+                downloadObjectAsJson(config, "roi-config");
+            });
+            
+            // איפוס הטופס
+            resetBtn.addEventListener('click', function() {
+                form.reset();
+                updateTotalIncome();
+                successMessage.style.display = 'none';
+            });
+        });
+    </script>
+</body>
+</html>
